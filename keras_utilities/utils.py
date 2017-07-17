@@ -30,7 +30,10 @@ from theano import shared, tensor as T
 from theano.tensor.nnet import conv2d, nnet
 from theano.tensor.signal import pool
 
-import keras from keras import backend as K from keras.utils.data_utils import get_file from keras.utils import np_utils
+import keras
+from keras import backend as K
+from keras.utils.data_utils import get_file
+from keras.utils import np_utils
 from keras.utils.np_utils import to_categorical
 from keras.models import Sequential, Model
 from keras.layers import Input, Embedding, Reshape, merge, LSTM, Bidirectional
@@ -45,10 +48,10 @@ from keras.layers.convolutional import *
 from keras.preprocessing import image, sequence
 from keras.preprocessing.text import Tokenizer
 
-from vgg16 import *
-from vgg16bn import *
-np.set_printoptions(precision=4, linewidth=100)
+from .models.vgg16 import *
+from .models.vgg16bn import *
 
+np.set_printoptions(precision=4, linewidth=100)
 
 to_bw = np.array([0.299, 0.587, 0.114])
 
