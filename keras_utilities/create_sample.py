@@ -6,13 +6,14 @@ import shutil
 sample_pct = .25
 random.seed(2)
 
-dirs = ['data_sample', 
-	'data_sample/train', 
-	'data_sample/train/dogs',
-	'data_sample/train/cats',
-	'data_sample/valid', 
-	'data_sample/valid/dogs',
-	'data_sample/valid/cats']
+
+dirs = ['data_sample',
+        'data_sample/train',
+        'data_sample/train/dogs',
+        'data_sample/train/cats',
+        'data_sample/valid',
+        'data_sample/valid/dogs',
+        'data_sample/valid/cats']
 
 for d in dirs:
 	if not os.path.exists(d): os.mkdir(d)
