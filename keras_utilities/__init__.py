@@ -1,4 +1,36 @@
+from .directory_tools import *
+from .utils import *
+
 __all__ = [
-    'directory_tools',
-    'utils'
+    'create_sample_data',
+    'create_val_set',
+    'split_directory_by_class',
+    'apply_directory_structure',
+    'onehot',
+    'gray',
+    'to_plot',
+    'plot',
+    'floor',
+    'ceil',
+    'plots',
+    'do_clip',
+    'get_batches',
+    'wrap_config',
+    'copy_layer',
+    'copy_layers',
+    'copy_weights',
+    'copy_model',
+    'insert_layer',
+    'adjust_dropout',
+    'get_data',
+    'plot_confusion_matrix',
+    'save_array',
+    'load_array',
+    'mk_size',
+    'mk_square',
+    'vgg_ft',
+    'vgg_ft_bn',
+    'get_classes',
+    'split_at',
+    'MixIterator'
 ]
