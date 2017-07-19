@@ -1,4 +1,4 @@
 __all__ = [
-    'directory_tools'
+    'directory_tools',
     'utils'
 ]
