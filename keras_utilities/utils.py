@@ -14,7 +14,6 @@ import math
 import itertools
 
 import pandas as pd
-from pandas import get_dummies
 import PIL
 from PIL import Image
 from numpy.random import random, permutation, randn, normal, uniform, choice
@@ -39,6 +38,7 @@ import keras
 from keras import backend as K
 from keras.utils.data_utils import get_file
 from keras.utils import np_utils
+from keras.utils.np_utils import to_categorical
 from keras.models import Sequential, Model
 from keras.layers import Input, Embedding, Reshape, merge, LSTM, Bidirectional
 from keras.layers import TimeDistributed, Activation, SimpleRNN, GRU
@@ -106,7 +106,7 @@ def get_batches(dirname, gen=image.ImageDataGenerator(), shuffle=True, batch_siz
 
 
 def onehot(x):
-    return get_dummies(x)
+    return to_categorical(x)
 
 
 def wrap_config(layer):
