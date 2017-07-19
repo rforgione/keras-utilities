@@ -87,7 +87,8 @@ def split_directory_by_class(img_dir, class_list):
             if c in img_name:
                 shutil.rename(img_dir + "/%s" % img_name, img_dir + "/%s/%s" % (c, img_name))
 
-def apply_directory_structure(data_dir, sample_dir, sample_pct=.25, val_pct, class_list):
+
+def apply_directory_structure(data_dir, sample_dir, class_list, sample_pct=.25, val_pct=.25):
     """
     Args:
         data_dir (str): The original folder containing training data
