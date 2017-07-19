@@ -1,9 +1,9 @@
-from distutils.core import setup
+from setuptools import setup, find_packages
 
 setup(
     name='keras-utilities',
     version='0.1dev',
-    packages=['keras_utilities',],
+    packages=find_packages(),
     install_requires=[
         'bcolz',
         'matplotlib',

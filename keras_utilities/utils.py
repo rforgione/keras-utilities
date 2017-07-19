@@ -13,6 +13,7 @@ from matplotlib import pyplot as plt
 import math
 import itertools
 
+import numpy as np
 import pandas as pd
 import PIL
 from PIL import Image
@@ -52,8 +53,8 @@ from keras.layers.convolutional import *
 from keras.preprocessing import image, sequence
 from keras.preprocessing.text import Tokenizer
 
-from keras_utilities.models.vgg16 import *
-from keras_utilities.models.vgg16bn import *
+from .models.vgg16bn import Vgg16BN
+from .models.vgg16 import Vgg16
 
 np.set_printoptions(precision=4, linewidth=100)
 

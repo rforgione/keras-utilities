@@ -1,5 +1,6 @@
 from .directory_tools import *
 from .utils import *
+from .models import vgg16bn, vgg16
 
 __all__ = [
     'create_sample_data',
@@ -32,5 +33,5 @@ __all__ = [
     'vgg_ft_bn',
     'get_classes',
     'split_at',
-    'MixIterator'
+    'MixIterator',
 ]
