@@ -109,8 +109,6 @@ def apply_directory_structure(data_dir, sample_dir, sample_pct=.25, val_pct, cla
 
     return None
 
-def apply
-
 
 
 
