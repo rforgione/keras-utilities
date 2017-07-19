@@ -1,7 +1,7 @@
+from __future__ import division,print_function
 import matplotlib as mpl
 mpl.use('Agg')
 from matplotlib import pyplot as plt
-from __future__ import division,print_function
 import math, os, json, sys, re
 import cPickle as pickle
 from glob import glob
