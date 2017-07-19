@@ -1,17 +1,20 @@
+"""
+99% of this is not my work. This is part of the toolkit shared
+by Jeremy Howard in his FastAI course on Deep Learning. I am
+iterating a bit on some of these functions but I'm using many
+of them as-is. All credit goes to the course instructors. As a
+side note, the course is truly wonderful.
+"""
+
 from __future__ import division,print_function
 import matplotlib as mpl
 mpl.use('Agg')
 from matplotlib import pyplot as plt
-import math, os, json, sys, re
-import cPickle as pickle
-from glob import glob
-import numpy as np
-from operator import itemgetter, attrgetter, methodcaller
-from collections import OrderedDict
+import math
 import itertools
-from itertools import chain
 
 import pandas as pd
+from pandas import get_dummies
 import PIL
 from PIL import Image
 from numpy.random import random, permutation, randn, normal, uniform, choice
@@ -36,7 +39,6 @@ import keras
 from keras import backend as K
 from keras.utils.data_utils import get_file
 from keras.utils import np_utils
-from keras.utils.np_utils import to_categorical
 from keras.models import Sequential, Model
 from keras.layers import Input, Embedding, Reshape, merge, LSTM, Bidirectional
 from keras.layers import TimeDistributed, Activation, SimpleRNN, GRU
@@ -104,7 +106,7 @@ def get_batches(dirname, gen=image.ImageDataGenerator(), shuffle=True, batch_siz
 
 
 def onehot(x):
-    return to_categorical(x)
+    return get_dummies(x)
 
 
 def wrap_config(layer):
