@@ -3,59 +3,39 @@ import random
 import shutil
 
 
-def create_sample_data(data_dir, sample_dir=None, sample_pct=.1):
+def create_sample_data(src_dir, target_dir=None, sample_pct=.1, method='copy'):
     """
-    A function for taking a chunk of training data and using it to make
-    a sample training set. The purpose is to allow for fast iteration
-    on models using a small sample of data, rather than trying new
-    approaches on the entire training set.
+    A function for taking a chunk of training data and either copying or
+    moving it to a chosen location with probability `sample_pct`. This
+    can be used to build a sample training set, or it could be used to
+    build a validation set.
 
     Args:
-        data_dir (str): the path to the original dataset
-        sample_dir (str): the path to directory where the sample data
+        src_dir (str): the path to the original dataset
+        target_dir (str): the path to directory where the sample data
             will live
         sample_pct (float): the percentage of the data to use in a sample
+        method (str): can be 'copy' or 'move'; copy copies the files while
+            move moves them
 
     Returns:
         None
     """
-    if not sample_dir:
-        sample_dir = data_dir + "/../sample"
+    if not target_dir:
+        target_dir = src_dir + "/../sample"
 
-    if not os.path.exists(sample_dir):
-        os.mkdir(sample_dir)
+    if not os.path.exists(target_dir):
+        os.mkdir(target_dir)
 
-    for i in os.listdir(data_dir):
+    for i in os.listdir(src_dir):
         num = random.randint(1, (1/sample_pct))
         if num == 1:
-            shutil.copy(data_dir + "/%s" % i, sample_dir + "/%s" % i)
-
-
-def create_val_set(img_dir, val_pct=.25):
-    """
-    A function for allocating a directory of images into `train` and `valid` directories
-    for model training and validation, respectively.
-
-    Args:
-        img_dir (str): The full path of the directory containing the images
-        val_pct (float): The percentage of training data that we want to use as a validation set
-    Returns:
-        None
-    """
-
-    # TODO: warn if validation or training sets already exists
-    if not os.path.isdir(img_dir + "valid"):
-        os.mkdir(img_dir + "valid")
-
-    if not os.path.isdir(img_dir + "train"):
-        os.mkdir(img_dir + "train")
-
-    for i in os.listdir("data/train"):
-        num = random.randint(1, (1/val_pct))
-        if num == 1:
-            os.rename(img_dir + "/%s" % i, img_dir + "/valid/%s" % i)
-        else:
-            os.rename(img_dir + "/%s" % i, img_dir + "/train/%s" % i)
+            if method == 'copy':
+                shutil.copy(src_dir + "/%s" % i, target_dir + "/%s" % i)
+            elif method == 'move':
+                os.rename(src_dir + "/%s" % i, target_dir + "/%s" % i)
+            else:
+                raise ValueError("Method must be either 'copy' or 'move'.")
 
 
 def split_directory_by_class(img_dir, class_list):
