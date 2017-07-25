@@ -37,6 +37,8 @@ def create_data_sample(main_data_dir, sample_data_dir, subset_pct=.25):
     A function for creating a sample data directory for model experimentation.
     The sample directory will have the same directory structure as the main
     directory, but will have a fraction of the data as dictated by `subset_pct`.
+    The main directory structure should include a hierarchy that has 3 levels,
+    going from dataset (i.e. train or validation) to class label to image.
 
     Args:
         main_data_dir (str): the path to the primary data dir, complete with
@@ -52,12 +54,17 @@ def create_data_sample(main_data_dir, sample_data_dir, subset_pct=.25):
     main_data_dir = ensure_trailing_slash(main_data_dir)
     sample_data_dir = ensure_trailing_slash(sample_data_dir)
 
-    for subdir in os.listdir(main_data_dir):
+    for dset in ['train/', 'valid/']:
 
-        subdir_path = main_data_dir + subdir
-        sample_subdir_path = sample_data_dir + subdir
+        main_dset = main_data_dir + dset
+        sample_dset = sample_data_dir + dset
 
-        move_data_subset(subdir_path, sample_subdir_path, subset_pct, method='copy')
+        for subdir in os.listdir(main_dset):
+
+            subdir_path = main_dset + subdir
+            sample_subdir_path = sample_dset + subdir
+
+            move_data_subset(subdir_path, sample_subdir_path, subset_pct, method='copy')
 
 
 def ensure_trailing_slash(path_str):
