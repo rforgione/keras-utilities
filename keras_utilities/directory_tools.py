@@ -3,7 +3,7 @@ import random
 import shutil
 
 
-def create_sample_data(src_dir, target_dir=None, sample_pct=.1, method='copy'):
+def move_data_subset(src_dir, target_dir, subset_pct=.1, method='copy'):
     """
     A function for taking a chunk of training data and either copying or
     moving it to a chosen location with probability `sample_pct`. This
@@ -21,21 +21,66 @@ def create_sample_data(src_dir, target_dir=None, sample_pct=.1, method='copy'):
     Returns:
         None
     """
-    if not target_dir:
-        target_dir = src_dir + "/../sample"
-
-    if not os.path.exists(target_dir):
-        os.mkdir(target_dir)
-
     for i in os.listdir(src_dir):
-        num = random.randint(1, (1/sample_pct))
+        num = random.randint(1, (1/subset_pct))
         if num == 1:
             if method == 'copy':
-                shutil.copy(src_dir + "/%s" % i, target_dir + "/%s" % i)
+                safe_copy_file(src_dir + "/%s" % i, target_dir + "/%s" % i)
             elif method == 'move':
-                os.rename(src_dir + "/%s" % i, target_dir + "/%s" % i)
+                safe_move_file(src_dir + "/%s" % i, target_dir + "/%s" % i)
             else:
                 raise ValueError("Method must be either 'copy' or 'move'.")
+
+
+def create_data_sample(main_data_dir, sample_data_dir, subset_pct=.25):
+    """
+    A function for creating a sample data directory for model experimentation.
+    The sample directory will have the same directory structure as the main
+    directory, but will have a fraction of the data as dictated by `subset_pct`.
+
+    Args:
+        main_data_dir (str): the path to the primary data dir, complete with
+            subdirectories for training and validation sets
+        sample_data_dir (str): the path where we'd like to copy our main data
+            dir directory structure along with a fraction of the data
+        subset_pct (float): the percentage of the data to use in the sample
+
+    Returns:
+        None
+    """
+
+    main_data_dir = ensure_trailing_slash(main_data_dir)
+    sample_data_dir = ensure_trailing_slash(sample_data_dir)
+
+    for subdir in os.listdir(main_data_dir):
+
+        subdir_path = main_data_dir + subdir
+        sample_subdir_path = sample_data_dir + subdir
+
+        move_data_subset(subdir_path, sample_subdir_path, subset_pct, method='copy')
+
+
+def ensure_trailing_slash(path_str):
+
+    if path_str[-1] != '/':
+        path_str = path_str + '/'
+
+    return path_str
+
+
+def safe_copy_file(src_path, target_path):
+    ensure_path_exists(target_path)
+    shutil.copy(src_path, target_path)
+
+
+def safe_move_file(src_path, target_path):
+    ensure_path_exists(target_path)
+    shutil.move(src_path, target_path)
+
+
+def ensure_path_exists(path):
+    if not os.path.exists(os.path.dirname(path)):
+        os.makedirs(os.path.dirname(path))
 
 
 def split_directory_by_class(img_dir, class_list):
