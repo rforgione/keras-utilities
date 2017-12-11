@@ -32,7 +32,7 @@ def move_data_subset(src_dir, target_dir, subset_pct=.1, method='copy'):
                 raise ValueError("Method must be either 'copy' or 'move'.")
 
 
-def create_data_sample(main_data_dir, sample_data_dir, train_subset_pct=.25, val_subset_pct=1):
+def create_data_sample(train_data_dir, sample_data_dir, train_subset_pct=.25, val_subset_pct=1):
     """
     A function for creating a sample data directory for model experimentation.
     The sample directory will have the same directory structure as the main
@@ -51,25 +51,15 @@ def create_data_sample(main_data_dir, sample_data_dir, train_subset_pct=.25, val
         None
     """
 
-    main_data_dir = ensure_trailing_slash(main_data_dir)
+    train_data_dir = ensure_trailing_slash(train_data_dir)
     sample_data_dir = ensure_trailing_slash(sample_data_dir)
 
-    for dset in ['train/', 'valid/']:
+    for subdir in os.listdir(train_data_dir):
 
-        main_dset = main_data_dir + dset
-        sample_dset = sample_data_dir + dset
+        train_subdir_path = train_data_dir + subdir
+        sample_subdir_path =  sample_data_dir + subdir
 
-        for subdir in os.listdir(main_dset):
-
-            subdir_path = main_dset + subdir
-            sample_subdir_path = sample_dset + subdir
-
-            if dset == 'train/':
-                move_data_subset(subdir_path, sample_subdir_path, train_subset_pct, method='copy')
-            else:
-                move_data_subset(subdir_path, sample_subdir_path, val_subset_pct, method='copy')
-
-
+        move_data_subset(train_subdir_path, sample_subdir_path, train_subset_pct, method='copy')
 
 def ensure_trailing_slash(path_str):
 

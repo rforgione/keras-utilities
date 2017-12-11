@@ -3,7 +3,7 @@ from .utils import *
 from .models import vgg16bn, vgg16
 
 __all__ = [
-    'create_sample_data',
+    'create_data_sample',
     'split_directory_by_class',
     'apply_directory_structure',
     'onehot',
