@@ -4,6 +4,7 @@ from .models import vgg16bn, vgg16
 
 __all__ = [
     'create_data_sample',
+    'move_data_subset',
     'split_directory_by_class',
     'apply_directory_structure',
     'onehot',
